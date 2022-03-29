@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="style.css">
+
+<body>
+    <div class="carousel">
+        <div class="slides">
+
+
+
+
+            <video class="slide" autoplay muted loop>
+                <source src="./videos/v-1.mp4" type="video/mp4">
+            </video>
+            <video class="slide" autoplay muted loop>
+                <source src="./videos/v-2.mp4" type="video/mp4">
+            </video>
+            <video class="slide" autoplay muted loop>
+                <source src="./videos/v-3.mp4" type="video/mp4">
+            </video>
+
+
+
+        </div>
+        <div class="controls">
+            <div class="control prev-slide">&#9668;</div>
+            <div class="control next-slide">&#9658;</div>
+        </div>
+    </div>
+
+
+    <script>
+
+        const delay = 5000; //ms
+
+        const slides = document.querySelector(".slides");
+        const slidesCount = slides.childElementCount;
+        const maxLeft = (slidesCount - 1) * 100 * -1;
+
+        let current = 0;
+
+        function changeSlide(next = true) {
+            if (next) {
+                current += current > maxLeft ? -100 : current * -1;
+            } else {
+                current = current < 0 ? current + 100 : maxLeft;
+            }
+
+            slides.style.left = current + "%";
+        }
+
+        let autoChange = setInterval(changeSlide, delay);
+        const restart = function () {
+            clearInterval(autoChange);
+            autoChange = setInterval(changeSlide, delay);
+        };
+
+        // Controls
+        document.querySelector(".next-slide").addEventListener("click", function () {
+            changeSlide();
+            restart();
+        });
+
+        document.querySelector(".prev-slide").addEventListener("click", function () {
+            changeSlide(false);
+            restart();
+        });
+
+    </script>
+</body>
+
+</html>
